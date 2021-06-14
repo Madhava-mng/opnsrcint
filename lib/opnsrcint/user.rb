@@ -31,6 +31,7 @@ class User
       "skynettools":[URI("https://skynettools.com/tag/#{@user}/"), '200', ''],
       "twitch":[URI("https://m.twitch.tv/#{@user}"), '200', ''],
       "cbtnuggets":[URI("https://www.cbtnuggets.com/trainers/#{@user}"), '200', ''],
+      "gravatar":[URI("http://en.gravatar.com/#{@user}"), '200', '']
       }
     plus_18 ={
       "xcamsters":[URI("https://www.xcamsters.com/chat/#{@user}"), '200', ''],
