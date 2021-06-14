@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+require 'opnsrcint'
+
+HELP = "
+Usage: opnsrcint [cmd] [argv]
+OSINT tool for username deduction.
+
+cmd: scan4user, help
+
+argv/scan4user:
+  scan for username
+  -v verbose output
+  -p search username from 18+ sites
+
+argv/help:
+  show this message
+
+example/scan4user:
+  opnsrcint scan4user -v user1,user2,user3
+"
+
+def main
+
+  verbose = false
+  prono = false
+  users = ''
+
+  case ARGV[0]
+  when 'scan4user'
+    ARGV.map do |arg|
+      if arg.start_with? '-'
+        case arg
+        when '-v'
+          verbose = true
+        when '-p'
+          prono = true
+        else
+          puts "opnsrcint: #{arg} flag not found.\nrun 'opnsrcint help'.";exit
+        end
+      elsif arg != 'scan4user'
+        users = arg.split(",")
+      end
+    end
+
+    if users != ''
+      Opnsrcint::search_for_username(users, verbose, prono)
+    else
+      puts "opnsrcint: User name need.\nrun 'opnsrcint help'."
+    end
+
+  when 'help'
+    puts HELP
+  else
+    puts "opnsrcint: #{ARGV[0]} command not found.\nrun 'opnsrcint help'."
+  end
+
+end
+main
