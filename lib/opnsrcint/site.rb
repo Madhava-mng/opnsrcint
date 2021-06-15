@@ -54,7 +54,3 @@ class Site
     while Thread::list.length > 1;end
   end
 end
-
-a = Site::new("https://red5cracker.wordpress.com")
-#a = Site::new("https://hsploit.com")
-a.scan
