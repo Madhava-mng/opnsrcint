@@ -1,10 +1,10 @@
 # Opnsrcint
 
-[](https://img.shields.io/gem/v/opnsrcint)
-[](https://img.shields.io/gem/dt/opnsrcint)
-[](https://img.shields.io/gem/rt/opnsrcint)
-[](https://img.shields.io/gem/dtv/opnsrcint)
-[](https://img.shields.io/github/license/Madhava-mng/opnsrcint)
+![](https://img.shields.io/gem/v/opnsrcint)
+![](https://img.shields.io/gem/dt/opnsrcint)
+![](https://img.shields.io/gem/rt/opnsrcint)
+![](https://img.shields.io/gem/dtv/opnsrcint)
+![](https://img.shields.io/github/license/Madhava-mng/opnsrcint)
 
 
 OSINT tool for searching username,subdomain finding using dns
