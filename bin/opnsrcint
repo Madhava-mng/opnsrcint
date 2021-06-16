@@ -3,28 +3,46 @@
 require 'opnsrcint'
 
 HELP = "
-Usage: opnsrcint [cmd] [argv]
-OSINT tool for username deduction.
+OPNSRCINT (v#{Opnsrcint::VERSION})  Madhava-mng@cyb3r-mafia
 
-cmd: scan4user, help
+Usage: opnsrcint [cmd] [argv]
+
+OSINT tool for username deduction,
+Sub domain enumeration.
+
+Cmd: scan4user, subenum, help
 
 argv/scan4user:
-  scan for username
-  -v verbose output
-  -p search username from 18+ sites
+  Search for user name and also
+  get data such as email,links...
+  -v verbose output.
+  -p search username from 18+ sites.
+
+argv/subenum:
+  Search for subdomains with dns
+  server: cloudflare,google,opendns,quad9
+  -w Use Custom dictnary.
+  -t Maximum concurrency.
+  -T Set time out.
 
 argv/help:
   show this message
 
+report/issue:
+  https://github.com/Madhava-mng/opnsrcint
+
 example/scan4user:
   opnsrcint scan4user -v user1,user2,user3
+
+example/subenum:
+  opnsrcint subenum -t 20 example.com
 "
 
 def main
 
   verbose = false
   prono = false
-  users = ''
+  targets = ''
 
   case ARGV[0]
   when 'scan4user'
@@ -39,18 +57,66 @@ def main
           puts "opnsrcint: #{arg} flag not found.\nrun 'opnsrcint help'.";exit
         end
       elsif arg != 'scan4user'
-        users = arg.split(",")
+        targets = arg.split(",")
       end
     end
 
-    if users != ''
-      Opnsrcint::search_for_username(users, verbose, prono)
+    if targets != ''
+      Opnsrcint::search_for_username(targets, verbose, prono)
     else
       puts "opnsrcint: User name need.\nrun 'opnsrcint help'."
     end
 
   when 'help'
     puts HELP
+  when 'subenum'
+
+    sub_enum = Subdomain_enum::new
+
+    ARGV.length.times do |i|
+
+      if ARGV[i].start_with? '-'
+        case ARGV[i]
+        when '-t'
+
+          if ARGV[i+1].to_i.is_a? Integer
+            sub_enum.max_thread = ARGV[i+1].to_i
+          else
+            puts 'opnsrcint :-t :must be integer.'
+            exit
+          end
+
+        when '-T'
+          if ARGV[i+1].to_i.is_a? Integer
+            sub_enum.timeout = ARGV[i+1].to_i
+          else
+            puts 'opnsrcint :-T :must be integer.'
+            exit
+          end
+
+        when '-w'
+          if File.file? ARGV[i+1]
+            sub_enum.wordlist = ARGV[i+1]
+          else
+            puts 'opnsrcint :-w :Unable to locate file.'
+            exit
+          end
+        else
+          puts "opnsrcint :#{ARGV[i]} Invalied flag."
+          exit
+        end
+      else
+        sub_enum.target = ARGV[i]
+      end
+    end
+    begin
+      sub_enum.brut
+    rescue Interrupt => e
+      puts "\e[A\e[C";exit
+    rescue => e
+    end
+
+
   else
     puts "opnsrcint: #{ARGV[0]} command not found.\nrun 'opnsrcint help'."
   end

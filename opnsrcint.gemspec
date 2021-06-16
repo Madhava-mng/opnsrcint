@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["newmob@hotmail.com"]
 
   spec.summary       = "OSINT tool"
-  spec.description   = "OSINT tool for username,.."
+  spec.description   = "OSINT tool for username, subdomain..."
   spec.homepage      = "https://github.com/Madhava-mng/opnsrcint"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
@@ -32,6 +32,8 @@ Gem::Specification.new do |spec|
     "opnsrcint.gemspec",                                                                    "Rakefile",
     "README.md",                                                                            "bin/console",
     "bin/setup",                                                                            "bin/opnsrcint",
+    "dict/subdomain.txt", 
+    "lib/opnsrcint/subdomain_enum.rb", 
   ]
 
   spec.executables   = ['opnsrcint']
