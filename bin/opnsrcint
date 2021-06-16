@@ -62,7 +62,11 @@ def main
     end
 
     if targets != ''
+      begin
       Opnsrcint::search_for_username(targets, verbose, prono)
+      rescue Interrupt => e
+        puts "\e[A\e[C"exit
+      end
     else
       puts "opnsrcint: User name need.\nrun 'opnsrcint help'."
     end
