@@ -8,9 +8,10 @@ OPNSRCINT (v#{Opnsrcint::VERSION})  Madhava-mng@cyb3r-mafia
 Usage: opnsrcint [cmd] [argv]
 
 OSINT tool for username deduction,
-Sub domain enumeration.
+Sub domain enumeration,
+leaked mail deductiom.
 
-Cmd: scan4user, subenum, help
+Cmd: scan4user, subenum, leakedmail, help
 
 argv/scan4user:
   Search for user name and also
@@ -25,6 +26,9 @@ argv/subenum:
   -t Maximum concurrency.
   -T Set time out.
 
+argv/leakedmail:
+  Search for is leaked mail.
+
 argv/help:
   show this message
 
@@ -36,6 +40,9 @@ example/scan4user:
 
 example/subenum:
   opnsrcint subenum -t 20 example.com
+
+example/leakedmail:
+  opnsrcint leakedmail test@testmail.com
 "
 
 def main
@@ -65,7 +72,7 @@ def main
       begin
       Opnsrcint::search_for_username(targets, verbose, prono)
       rescue Interrupt => e
-        puts "\e[A\e[C"exit
+        puts "\e[A\e[C";exit
       end
     else
       puts "opnsrcint: User name need.\nrun 'opnsrcint help'."
@@ -73,6 +80,16 @@ def main
 
   when 'help'
     puts HELP
+
+  when 'leakedmail'
+    begin
+      Mail_leak::new::search_mail(ARGV[1])
+      while Thread::list::length > 1;sleep 0.5;end
+    rescue => e
+    rescue Interrupt => e
+      puts "\e[A\e[C";exit
+      
+    end
   when 'subenum'
 
     sub_enum = Subdomain_enum::new

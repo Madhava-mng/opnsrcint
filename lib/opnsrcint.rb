@@ -3,6 +3,7 @@
 require_relative "opnsrcint/version"
 require_relative "opnsrcint/subdomain_enum"
 require_relative "opnsrcint/user"
+require_relative "opnsrcint/mail_leak"
 
 
 module Opnsrcint
