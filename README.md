@@ -46,11 +46,6 @@ opnsrcint scan4user user1,user2
 opnsrcint subenum example.com
 ```
 
-**leacked mail:**
-
-```
-opnsrcint leakedmail exampl@email.com
-```
 
 ## example for irb
 

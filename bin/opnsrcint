@@ -9,9 +9,8 @@ Usage: opnsrcint [cmd] [argv]
 
 OSINT tool for username deduction,
 Sub domain enumeration,
-leaked mail deductiom.
 
-Cmd: scan4user, subenum, leakedmail, help
+Cmd: scan4user, subenum, help
 
 argv/scan4user:
   Search for user name and also
@@ -26,8 +25,6 @@ argv/subenum:
   -t Maximum concurrency.
   -T Set time out.
 
-argv/leakedmail:
-  Search for is leaked mail.
 
 argv/help:
   show this message
@@ -40,9 +37,6 @@ example/scan4user:
 
 example/subenum:
   opnsrcint subenum -t 20 example.com
-
-example/leakedmail:
-  opnsrcint leakedmail test@testmail.com
 "
 
 def main
@@ -80,33 +74,21 @@ def main
 
   when 'help'
     puts HELP
-
-  when 'leakedmail'
-    begin
-      Mail_leak::new::search_mail(ARGV[1])
-      while Thread::list::length > 1;sleep 0.5;end
-    rescue => e
-    rescue Interrupt => e
-      puts "\e[A\e[C";exit
       
-    end
   when 'subenum'
 
     sub_enum = Subdomain_enum::new
 
     ARGV.length.times do |i|
-
       if ARGV[i].start_with? '-'
         case ARGV[i]
         when '-t'
-
           if ARGV[i+1].to_i.is_a? Integer
             sub_enum.max_thread = ARGV[i+1].to_i
           else
             puts 'opnsrcint :-t :must be integer.'
             exit
           end
-
         when '-T'
           if ARGV[i+1].to_i.is_a? Integer
             sub_enum.timeout = ARGV[i+1].to_i
@@ -114,7 +96,6 @@ def main
             puts 'opnsrcint :-T :must be integer.'
             exit
           end
-
         when '-w'
           if File.file? ARGV[i+1]
             sub_enum.wordlist = ARGV[i+1]
@@ -130,6 +111,7 @@ def main
         sub_enum.target = ARGV[i]
       end
     end
+
     begin
       sub_enum.brut
     rescue Interrupt => e
