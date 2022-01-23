@@ -10,6 +10,7 @@ class User
     @tmp_list = []
     @url_list = {
       "github": [URI("https://github.com/"+@user), '200', 'github'],
+      "gitlab": [URI("https://gitlab.com/"+@user), '200', 'gitlab'],
       "pypi": [URI("https://pypi.org/user/#{@user}/"), '200', 'pypi'],
       "pypi*C": [URI("https://pypi.org/user/#{@user.capitalize}/"), '200', 'pypi'],
       "udemy": [URI("https://www.udemy.com/user/#{@user}/"), '200', ''],
